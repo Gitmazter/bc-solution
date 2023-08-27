@@ -33,7 +33,7 @@ exports.latestBlock = catchErrorAsync(async (req:Request, res:Response) => {
   res.status(response.statusCode).json(response)
 })
 
-exports.blockchain = catchErrorAsync(async (req:Request, res:Response) => {
+exports.getBlockchain = catchErrorAsync(async (req:Request, res:Response) => {
   const data = kekChain
   response.status = 'Success';
   response.statusCode = 202;
