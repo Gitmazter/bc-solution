@@ -38,19 +38,27 @@ class Blockchain {
         this.chain.push(block);
         return block;
     }
+    ;
     createBlock(nonce, previousHash) {
         const now = new Date();
         const block = new Block_1.default(this.chain.length + 1, this.pendingList, nonce, previousHash, now);
         return block;
     }
+    ;
     latestBlock() {
         return this.chain.at(-1);
     }
+    ;
     proposeTransaction(transaction) {
-        this.pendingList.push(transaction);
-        // validate tx and broadcast to all nodes
-        return this.latestBlock().index;
+        return __awaiter(this, void 0, void 0, function* () {
+            this.pendingList.push(transaction);
+            // validate tx and broadcast to all nodes
+            const nextBlock = this.latestBlock().index + 1;
+            console.log(nextBlock);
+            return nextBlock;
+        });
     }
+    ;
     createHash(input) {
         return __awaiter(this, void 0, void 0, function* () {
             const inputBuffer = new TextEncoder().encode(input);
@@ -60,6 +68,7 @@ class Blockchain {
             return hash;
         });
     }
+    ;
     mineBlock() {
         return __awaiter(this, void 0, void 0, function* () {
             const previousHash = this.chain.at(-1).hash;
@@ -73,6 +82,7 @@ class Blockchain {
             return newBlock;
         });
     }
+    ;
     POW(previousHash) {
         return __awaiter(this, void 0, void 0, function* () {
             let nonce = 0;
@@ -86,11 +96,14 @@ class Blockchain {
                     tempBlock.hash = tempHash;
                     nonceFound = true;
                 }
+                ;
                 nonce++;
             }
+            ;
             return tempBlock;
         });
     }
+    ;
 }
 ;
 exports.default = Blockchain;

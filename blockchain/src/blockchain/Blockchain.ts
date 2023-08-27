@@ -1,4 +1,3 @@
-import { Web3EthPluginBase } from 'web3';
 import Block from './Block'
 
 // TODO: Validate chain on startup if chain is !== []
@@ -34,7 +33,7 @@ class Blockchain implements BlockchainTypes {
     this.pendingList = [];
     this.chain.push(block);
     return block;
-  }
+  };
 
   createBlock (nonce:number, previousHash:string) { //Cant have hash before block is created
     const now = new Date()
@@ -44,19 +43,22 @@ class Blockchain implements BlockchainTypes {
       nonce,
       previousHash,
       now
-    )
+    );
     return block;
-}
+  };
 
   latestBlock () {
     return this.chain.at(-1)
-  }
+  };
 
-  proposeTransaction(transaction:any) {
+  async proposeTransaction(transaction:any) {
     this.pendingList.push(transaction);
     // validate tx and broadcast to all nodes
-    return this.latestBlock().index;
-  }
+    const nextBlock = this.latestBlock().index + 1
+    console.log(nextBlock);
+    
+    return nextBlock;
+  };
 
   async createHash(input:string) {
     const inputBuffer = new TextEncoder().encode(input);
@@ -64,7 +66,7 @@ class Blockchain implements BlockchainTypes {
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     const hash = hashArray.map((item) => item.toString(16).padStart(2, "0")).join("")
     return hash
-  }
+  };
 
   async mineBlock() {
     const previousHash = this.chain.at(-1).hash;
@@ -77,7 +79,7 @@ class Blockchain implements BlockchainTypes {
     // Remove all pending list entries up to and including last tx hash in pending list
     // somealgotoclearpending()
     return newBlock;
-  }
+  };
 
   async POW (previousHash:string) {
     let nonce = 0;
@@ -91,12 +93,12 @@ class Blockchain implements BlockchainTypes {
       if (tempHash.slice(0,4) === "0000") {      
         tempBlock.hash = tempHash;
         nonceFound = true;
-      }
+      }; 
       nonce++;
-    }
+    };
 
     return tempBlock;
-  }
+  };
 };
 
 export default Blockchain
