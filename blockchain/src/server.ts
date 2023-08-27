@@ -1,16 +1,36 @@
-import express from 'express';
-import cors from 'cors';
+import express, { Response } from 'express'
+import cors from 'cors'
+import errorHandler from './api/middleware/errorHandler'
+import router from './api/routes/node-routes';
+import bodyParser from 'body-parser';
 
-const port = 3000;
+const app = express()
+app.use(cors({
+  origin: '*',
+}));
 
-const http = express();
-http.use(express.json());
-http.use(cors())
+app.use(bodyParser.json())
+app.use(router)
+// app.use(express.json())
 
-http.get('/ping', (req,res) => {
-  res.status(200).json('Pong')
+app.all('*', (req, res, next) => {
+
+  const err:any = new Error(
+    `Couldn't find ${req.originalUrl}, did you misspell the url?`
+  );
+  (err.status = 'Not Found'), (err.statusCode = 404);
+
+  next(err)
 })
 
-http.listen(port, () => {
-  return console.log(`Express is listening at http://localhost:${port}`);
-});
+app.use(errorHandler)
+
+const PORT = 8080;
+
+app.listen(
+  PORT,
+  () => {console.log('Express is listening to port 8080')}
+);
+
+
+
