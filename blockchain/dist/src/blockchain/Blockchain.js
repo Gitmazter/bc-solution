@@ -24,11 +24,10 @@ class Blockchain {
     }
     ;
     createGenesisBlock(nonce, previousHash, hash) {
-        const now = new Date();
         const block = {
             index: this.chain.length + 1,
-            timestamp: now.valueOf(),
-            uiTimestamp: now.toUTCString(),
+            timestamp: 0,
+            uiTimestamp: "",
             data: this.pendingList,
             nonce: nonce,
             hash: hash,
@@ -49,10 +48,10 @@ class Blockchain {
         return this.chain.at(-1);
     }
     ;
-    proposeTransaction(transaction) {
+    validateTransaction(transaction) {
         return __awaiter(this, void 0, void 0, function* () {
+            // validate tx before pushing
             this.pendingList.push(transaction);
-            // validate tx and broadcast to all nodes
             const nextBlock = this.latestBlock().index + 1;
             console.log(nextBlock);
             return nextBlock;
@@ -73,7 +72,7 @@ class Blockchain {
         return __awaiter(this, void 0, void 0, function* () {
             const previousHash = this.chain.at(-1).hash;
             const newBlock = yield this.POW(previousHash);
-            this.chain.push(newBlock);
+            // this.chain.push(newBlock);
             // Broadcast new block 
             // somefunctobroadcast()
             this.pendingList = []; // Ensure new additions during mining period to pending list are not removed
@@ -104,6 +103,45 @@ class Blockchain {
         });
     }
     ;
+    validateBlock(block) {
+        return __awaiter(this, void 0, void 0, function* () {
+            /*
+              NOTE: Changes to temp block affect block in chain later despite never being pushed
+              Perhaps it has to do with memory pointers and setting tempblock = block allowing changes
+              to the original block?
+        
+              Question for Michael
+            */
+            let tempBlock = block;
+            let previousHash = this.chain.at(-1).hash;
+            let blockIsValid = true;
+            if (block.previousHash !== previousHash) {
+                blockIsValid = false;
+            }
+            const origHash = tempBlock.hash;
+            tempBlock.hash = "";
+            const testHash = yield this.createHash(JSON.stringify(tempBlock));
+            tempBlock.hash = testHash;
+            if (origHash !== testHash) {
+                blockIsValid = false;
+            }
+            return blockIsValid;
+        });
+    }
+    validateChain(chain) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let chainIsValid = true;
+            chain.map((block) => {
+                if (block.index !== 1 && block.hash !== 'genesis') {
+                    const blockIsValid = this.validateBlock(block);
+                    if (!blockIsValid) {
+                        chainIsValid = false;
+                    }
+                }
+            });
+            return chainIsValid;
+        });
+    }
 }
 ;
 exports.default = Blockchain;

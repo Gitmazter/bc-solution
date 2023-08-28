@@ -18,12 +18,11 @@ class Blockchain implements BlockchainTypes {
   };
 
   createGenesisBlock (nonce:number, previousHash:string, hash:string ) { //Cant have hash before block is created
-    const now = new Date()
-    
+
     const block:Block = {
      index: this.chain.length + 1,
-     timestamp: now.valueOf(),
-     uiTimestamp: now.toUTCString(),
+     timestamp: 0,
+     uiTimestamp: "",
      data: this.pendingList,
      nonce: nonce,
      hash: hash,
@@ -33,6 +32,7 @@ class Blockchain implements BlockchainTypes {
     this.pendingList = [];
     this.chain.push(block);
     return block;
+    
   };
 
   createBlock (nonce:number, previousHash:string) { //Cant have hash before block is created
@@ -51,9 +51,10 @@ class Blockchain implements BlockchainTypes {
     return this.chain.at(-1)
   };
 
-  async proposeTransaction(transaction:any) {
+  async validateTransaction(transaction:any) {
+    // validate tx before pushing
     this.pendingList.push(transaction);
-    // validate tx and broadcast to all nodes
+
     const nextBlock = this.latestBlock().index + 1
     console.log(nextBlock);
     
@@ -71,7 +72,7 @@ class Blockchain implements BlockchainTypes {
   async mineBlock() {
     const previousHash = this.chain.at(-1).hash;
     const newBlock = await this.POW(previousHash);
-    this.chain.push(newBlock);
+    // this.chain.push(newBlock);
     // Broadcast new block 
     // somefunctobroadcast()
 
@@ -99,6 +100,49 @@ class Blockchain implements BlockchainTypes {
 
     return tempBlock;
   };
+
+
+  async validateBlock (block:Block) {
+    /* 
+      NOTE: Changes to temp block affect block in chain later despite never being pushed
+      Perhaps it has to do with memory pointers and setting tempblock = block allowing changes
+      to the original block? 
+
+      Question for Michael
+    */
+
+    let tempBlock = block;
+    let previousHash = this.chain.at(-1).hash;
+    
+    let blockIsValid = true;
+
+    if (block.previousHash !== previousHash) {
+      blockIsValid = false;
+    }
+
+    const origHash = tempBlock.hash
+    tempBlock.hash = ""
+    const testHash = await this.createHash(JSON.stringify(tempBlock));
+    tempBlock.hash = testHash;
+
+    
+    if (origHash !== testHash) {
+      blockIsValid = false
+    }
+
+    return blockIsValid;
+  }
+
+  async validateChain (chain:Block[]) {
+    let chainIsValid = true;
+    chain.map((block) => {
+      if (block.index !== 1 && block.hash !== 'genesis') {
+        const blockIsValid = this.validateBlock(block);
+        if (!blockIsValid) { chainIsValid = false }
+      }
+    })
+    return chainIsValid;
+  }
 };
 
 export default Blockchain

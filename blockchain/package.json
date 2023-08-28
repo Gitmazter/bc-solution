@@ -6,9 +6,10 @@
   "scripts": {
     "mock": "npx tsc && node dist/src/utils/1-800-we-mock.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": " npx tsc && nodemon dist/src/server.js 8080 'http//localhost:8080' ",
-    "start2": " npx tsc && nodemon dist/src/server.js 8083 'http//localhost:8083' ",
-    "start3": " npx tsc && nodemon dist/src/server.js 8082 'http//localhost:8082' "
+    "start0": " npx tsc && nodemon dist/src/server.js 8080 'http://localhost:8080' ",
+    "start2": " npx tsc && nodemon dist/src/server.js 8082 'http://localhost:8082' ",
+    "start3": " npx tsc && nodemon dist/src/server.js 8083 'http://localhost:8083' ",
+    "start4": " npx tsc && nodemon dist/src/server.js 8084 'http://localhost:8084' "
   },
   "keywords": [
     "Youknowit"

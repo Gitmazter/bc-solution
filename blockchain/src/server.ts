@@ -1,8 +1,7 @@
-import express, { Response } from 'express'
+import express from 'express'
 import cors from 'cors'
 import errorHandler from './api/middleware/errorHandler'
 import router from './api/routes/node-routes';
-import bodyParser from 'body-parser';
 import { defaultPORT } from './utils/config';
 
 
@@ -10,7 +9,7 @@ const app = express()
 app.use(cors({
   origin: '*',
 }));
-// app.use(bodyParser.json())
+// app.use(bodyParser.json()) I listen :) 
 app.use(express.json())
 app.use(router)
 
