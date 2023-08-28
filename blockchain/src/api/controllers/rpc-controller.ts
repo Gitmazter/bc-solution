@@ -24,6 +24,9 @@ exports.latestBlock = catchErrorAsync(async (req:Request, res:Response) => {
   res.status(response.statusCode).json(response)
 })
 
+
+// Returns entire blockchain object. (Unreliable method for longer chains) Will need to be paid service or
+// limited to a slice of the blockchain due to bandwidth/processing requirements. 
 exports.getBlockchain = catchErrorAsync(async (req:Request, res:Response) => {
   const data = kekChain
   response.status = 'Success';
