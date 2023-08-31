@@ -29,8 +29,7 @@ exports.registerBroadcastNode = catchErrorAsync(async (req:Request, res:Response
     body: JSON.stringify(body),
     headers: { 'Content-Type': 'application/json' },
   });
-
-  res.status(201).json({ success: true, data: 'Ny nod tillagd' });
+  res.status(201).json({ success: true, data: 'Node Added' });
 });
 
 // Register node

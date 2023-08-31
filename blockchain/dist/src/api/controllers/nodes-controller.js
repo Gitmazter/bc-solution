@@ -35,7 +35,7 @@ exports.registerBroadcastNode = (0, catchErrorAsync_1.default)((req, res) => __a
         body: JSON.stringify(body),
         headers: { 'Content-Type': 'application/json' },
     });
-    res.status(201).json({ success: true, data: 'Ny nod tillagd' });
+    res.status(201).json({ success: true, data: 'Node Added' });
 }));
 // Register node
 exports.registerSingleNode = (0, catchErrorAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -46,7 +46,7 @@ exports.registerSingleNode = (0, catchErrorAsync_1.default)((req, res) => __awai
     }
     res.status(201).json({ success: true, data: 'Your Node Has Been Added' });
 }));
-// Request nodes
+// Register nodes
 exports.registerNodes = (0, catchErrorAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const allNodes = req.body.nodes;
     allNodes.forEach((url) => {
@@ -57,7 +57,7 @@ exports.registerNodes = (0, catchErrorAsync_1.default)((req, res) => __awaiter(v
     });
     res.status(201).json({ success: true, data: 'New Nodes Added' });
 }));
-// List all node urls at target
+// List all networkNodes urls at target node
 exports.listNodes = (0, catchErrorAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const data = config_1.kekChain.networkNodes;
     config_1.response.status = 'Success';
@@ -89,6 +89,7 @@ exports.consensus = (0, catchErrorAsync_1.default)((req, res) => __awaiter(void 
         }))
             .then(() => {
             if (longestChain && config_1.kekChain.validateChain(longestChain)) {
+                chainUpdated = true;
                 config_1.kekChain.chain = longestChain;
                 config_1.kekChain.pendingList = pendingList;
             }

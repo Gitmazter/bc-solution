@@ -4,10 +4,12 @@ interface User {
 };
 
 interface Transaction {
-  amount: number,
+  vehicle: string,
   sender: string,
   recipient: string,
-  transactionId: string,
+  year: number,
+  make: string,
+  model: string,
   hash: string
 };
 

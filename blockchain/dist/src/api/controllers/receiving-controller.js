@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const catchErrorAsync_1 = __importDefault(require("../utils/catchErrorAsync"));
 const config_1 = require("../../utils/config");
+// Receive, validate and accept block if it is valid
 exports.receiveBlock = (0, catchErrorAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.clear();
     console.log("Block received, validating.....\n\n");
@@ -38,6 +39,7 @@ exports.receiveBlock = (0, catchErrorAsync_1.default)((req, res) => __awaiter(vo
         res.status(config_1.response.statusCode).json(config_1.response);
     }
 }));
+// Receive, validate and accept transaction if it is valid
 exports.receiveTransaction = (0, catchErrorAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const tx = req.body;
     const txIsValid = yield config_1.kekChain.validateTransaction(tx);

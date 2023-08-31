@@ -60,6 +60,81 @@ exports.mineBlock = catchErrorAsync(async (req:Request, res:Response) => {
   res.status(response.statusCode).json(response);
 })
 
+exports.getOwnerVehicles = catchErrorAsync(async (req:Request, res:Response) => {
+  // Note for Michael
+  // leaving request as recipient here to make testing for you easier so that you dont have to 
+  // rewrite Postman bodies too much between transactions/queries ** Should be req.body.owner or similar
+  const owner = req.body.recipient;
+  const vehicles = kekChain.findOwnerVehicles(owner);
+
+  response.status = 'Success';
+  response.statusCode = 200;
+  response.data = vehicles;
+  console.log(response);
+  
+  res.status(response.statusCode).json(response);
+});
+
+
+
+
+exports.newVehicle = catchErrorAsync(async (req:Request, res:Response) => {
+  const vehicleData = req.body;
+
+  const tx = await kekChain.firstRegistration(vehicleData.recipient, vehicleData.year, vehicleData.make, vehicleData.model) 
+  kekChain.pendingList.push(tx)
+
+  kekChain.networkNodes.forEach(async (url) => {
+    console.log('sending block to: ', url);
+    
+    await fetch(`${url}/receive/tx`, {
+      method: 'POST',
+      body: JSON.stringify(tx),
+      headers: { 'Content-Type': 'application/json' },
+    });
+  });
+
+  response.status = 'Success';
+  response.statusCode = 200;
+  response.data = tx;
+  console.log(response);
+  
+  res.status(response.statusCode).json(response);
+});
+
+
+
+
+exports.vehicleTransfer = catchErrorAsync(async (req:Request, res:Response) => {
+  const vehicleData = req.body;
+  
+  const tx = await kekChain.vehicleTransfer(
+    vehicleData.sender, 
+    vehicleData.recipient, 
+    vehicleData.vehicle, 
+    vehicleData.year, 
+    vehicleData.make, 
+    vehicleData.model
+  )
+  kekChain.pendingList.push(tx);
+  kekChain.networkNodes.forEach(async (url) => {
+    console.log('sending block to: ', url);
+    
+    await fetch(`${url}/receive/tx`, {
+      method: 'POST',
+      body: JSON.stringify(tx),
+      headers: { 'Content-Type': 'application/json' },
+    });
+  });
+
+  response.status = 'Success';
+  response.statusCode = 200;
+  response.data = tx;
+  console.log(response);
+  
+  res.status(response.statusCode).json(response);
+})
+
 
 
 

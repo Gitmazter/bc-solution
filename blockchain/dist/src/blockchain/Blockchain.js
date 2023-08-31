@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Block_1 = __importDefault(require("./Block"));
+const Transaction_1 = require("./Transaction");
 // TODO: Validate chain on startup if chain is !== []
 class Blockchain {
     constructor() {
@@ -50,12 +51,86 @@ class Blockchain {
     ;
     validateTransaction(transaction) {
         return __awaiter(this, void 0, void 0, function* () {
-            // validate tx before pushing
-            this.pendingList.push(transaction);
-            const nextBlock = this.latestBlock().index + 1;
-            console.log(nextBlock);
-            return nextBlock;
+            let tempTx = transaction;
+            const tempHash = transaction.hash;
+            tempTx.hash = '';
+            const hash2test = this.createHash(tempTx);
+            const senderVehicles = this.findOwnerVehicles(transaction.sender);
+            if (tempHash == hash2test && senderVehicles.indexOf(transaction.vehicle) > -1) {
+                this.pendingList.push(transaction);
+                const nextBlock = this.latestBlock().index + 1;
+                console.log(nextBlock);
+                return nextBlock;
+            }
+            else {
+                return null;
+            }
         });
+    }
+    ;
+    findVehicleTransactions(vehicle) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let transactions = [];
+            this.chain.forEach((block) => {
+                block.data.forEach((transaction) => {
+                    // console.log(transaction, vehicle);
+                    if (transaction.vehicle == vehicle) {
+                        transactions.push(transaction);
+                    }
+                });
+            });
+            return transactions;
+        });
+    }
+    firstRegistration(recipient, year, make, model) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const govSender = '00';
+            let newCar = new Transaction_1.VehicleTransaction(govSender, recipient, undefined, year, make, model);
+            newCar.hash = yield this.createHash(JSON.stringify(newCar));
+            return newCar;
+        });
+    }
+    vehicleTransfer(sender, recipient, vehicle, year, make, model) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const latestTransfer = this.searchPlate(vehicle);
+            console.log(latestTransfer);
+            if (latestTransfer.recipient = sender) {
+                let updatedState = new Transaction_1.VehicleTransaction(sender, recipient, vehicle, year, make, model);
+                updatedState.hash = yield this.createHash(JSON.stringify(updatedState));
+                return updatedState;
+            }
+        });
+    }
+    searchPlate(vehicle) {
+        let foundVehicle = null;
+        this.chain.forEach((block) => {
+            block.data.forEach((transaction) => {
+                if (transaction.vehicle = vehicle) {
+                    foundVehicle = transaction;
+                }
+            });
+        });
+        return foundVehicle;
+    }
+    ;
+    findOwnerVehicles(sender) {
+        let vehicles = [];
+        this.chain.forEach((block) => {
+            block.data.forEach((transaction) => {
+                if (transaction.recipient == sender) {
+                    vehicles.push(transaction);
+                }
+                ;
+                if (transaction.sender == sender) {
+                    var index = vehicles.findIndex((vehicle) => {
+                        return vehicle.recipient == sender;
+                    });
+                    vehicles.splice(index, 1);
+                }
+                ;
+            });
+        });
+        return vehicles;
     }
     ;
     createHash(input) {
@@ -72,12 +147,7 @@ class Blockchain {
         return __awaiter(this, void 0, void 0, function* () {
             const previousHash = this.chain.at(-1).hash;
             const newBlock = yield this.POW(previousHash);
-            // this.chain.push(newBlock);
-            // Broadcast new block 
-            // somefunctobroadcast()
-            this.pendingList = []; // Ensure new additions during mining period to pending list are not removed
-            // Remove all pending list entries up to and including last tx hash in pending list
-            // somealgotoclearpending()
+            this.pendingList = [];
             return newBlock;
         });
     }
@@ -110,7 +180,7 @@ class Blockchain {
               Perhaps it has to do with memory pointers and setting tempblock = block allowing changes
               to the original block?
         
-              Question for Michael
+              Question for Michael:: Confirmed by Michael, ok solution since we don't have to think about memory management
             */
             let tempBlock = block;
             let previousHash = this.chain.at(-1).hash;

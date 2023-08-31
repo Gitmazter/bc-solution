@@ -10,6 +10,6 @@
   "include": [
     "src/**/*.ts",
     "globalInterfaces.ts"
-  ],
+, "src/blockchain/utilities/makePlate.js"  ],
   "lib": ["es2015"]
 }

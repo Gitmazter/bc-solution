@@ -1,10 +1,12 @@
+import { Transaction } from 'mongodb';
 import Block from './Block'
+import { VehicleTransaction } from './Transaction';
 
 // TODO: Validate chain on startup if chain is !== []
 
 class Blockchain implements BlockchainTypes {
   chain: Block[];
-  pendingList: Transaction[];
+  pendingList: VehicleTransaction[];
   nodeUrl: string;
   networkNodes: string[];
 
@@ -17,8 +19,7 @@ class Blockchain implements BlockchainTypes {
     this.createGenesisBlock(1, 'genesis', 'genesis');
   };
 
-  createGenesisBlock (nonce:number, previousHash:string, hash:string ) { //Cant have hash before block is created
-
+  createGenesisBlock (nonce:number, previousHash:string, hash:string ) { //Cant have hash before block is created 
     const block:Block = {
      index: this.chain.length + 1,
      timestamp: 0,
@@ -50,17 +51,91 @@ class Blockchain implements BlockchainTypes {
   latestBlock () {
     return this.chain.at(-1)
   };
-
+  
   async validateTransaction(transaction:any) {
-    // validate tx before pushing
-    this.pendingList.push(transaction);
+    let tempTx = transaction;
+    const tempHash = transaction.hash;
+    tempTx.hash = '';
+    const hash2test = this.createHash(tempTx);
 
-    const nextBlock = this.latestBlock().index + 1
-    console.log(nextBlock);
+    const senderVehicles = this.findOwnerVehicles(transaction.sender);
     
-    return nextBlock;
+    if (tempHash == hash2test && senderVehicles.indexOf(transaction.vehicle) > -1) {
+      this.pendingList.push(transaction);
+
+      const nextBlock = this.latestBlock().index + 1
+      console.log(nextBlock);
+      
+      return nextBlock;
+    }
+    else {
+      return null
+    }
   };
 
+  async findVehicleTransactions (vehicle:string) {
+    let transactions = []
+    this.chain.forEach((block) => {
+      block.data.forEach((transaction) => {
+        // console.log(transaction, vehicle);
+        if (transaction.vehicle == vehicle) {
+          transactions.push(transaction)
+        }
+      })
+    })
+    return transactions;
+  }
+
+  async firstRegistration(recipient:string, year:number, make: string, model:string) {
+    const govSender = '00'
+    let newCar = new VehicleTransaction(govSender, recipient, undefined, year, make, model)
+    newCar.hash = await this.createHash(JSON.stringify(newCar));
+    return newCar
+  }
+
+  async vehicleTransfer(sender:string, recipient:string, vehicle:string, year:number, make: string, model:string) {
+    const latestTransfer = this.searchPlate(vehicle);
+    console.log(latestTransfer)
+
+    if (latestTransfer.recipient = sender) {
+      let updatedState = new VehicleTransaction(sender, recipient, vehicle, year, make, model);
+      updatedState.hash = await this.createHash(JSON.stringify(updatedState));
+      return updatedState;
+    }
+  }
+
+  searchPlate (vehicle:string) {
+    let foundVehicle = null;
+    this.chain.forEach((block) => {
+      block.data.forEach((transaction) => {
+        if (transaction.vehicle = vehicle) {
+          foundVehicle = transaction;
+        }
+      });
+    });
+    return foundVehicle;
+  };
+
+  findOwnerVehicles (sender:string) {
+    let vehicles = []
+    this.chain.forEach((block) => {
+      block.data.forEach((transaction) => {
+
+        if (transaction.recipient == sender) {
+          vehicles.push(transaction)
+        };
+
+        if (transaction.sender == sender) {
+          var index = vehicles.findIndex((vehicle) => {
+            return vehicle.recipient == sender
+          });
+          vehicles.splice(index, 1)
+        };
+      });
+    });
+    return vehicles
+  };
+ 
   async createHash(input:string) {
     const inputBuffer = new TextEncoder().encode(input);
     const hashBuffer = await crypto.subtle.digest("SHA-256", inputBuffer);
@@ -72,13 +147,8 @@ class Blockchain implements BlockchainTypes {
   async mineBlock() {
     const previousHash = this.chain.at(-1).hash;
     const newBlock = await this.POW(previousHash);
-    // this.chain.push(newBlock);
-    // Broadcast new block 
-    // somefunctobroadcast()
 
-    this.pendingList = [] // Ensure new additions during mining period to pending list are not removed
-    // Remove all pending list entries up to and including last tx hash in pending list
-    // somealgotoclearpending()
+    this.pendingList = [] 
     return newBlock;
   };
 
@@ -108,7 +178,7 @@ class Blockchain implements BlockchainTypes {
       Perhaps it has to do with memory pointers and setting tempblock = block allowing changes
       to the original block? 
 
-      Question for Michael
+      Question for Michael:: Confirmed by Michael, ok solution since we don't have to think about memory management 
     */
 
     let tempBlock = block;
@@ -143,6 +213,8 @@ class Blockchain implements BlockchainTypes {
     })
     return chainIsValid;
   }
+
+
 };
 
 export default Blockchain

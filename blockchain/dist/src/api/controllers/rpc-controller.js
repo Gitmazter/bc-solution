@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const catchErrorAsync_1 = __importDefault(require("../utils/catchErrorAsync"));
 const config_1 = require("../../utils/config");
+// Returns "pong"
 exports.ping = (0, catchErrorAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const data = 'pong';
     config_1.response.status = 'Success';
@@ -21,6 +22,7 @@ exports.ping = (0, catchErrorAsync_1.default)((req, res) => __awaiter(void 0, vo
     config_1.response.data = data;
     res.status(config_1.response.statusCode).json(config_1.response);
 }));
+// Returns latest block in chain
 exports.latestBlock = (0, catchErrorAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const data = config_1.kekChain.latestBlock();
     config_1.response.status = 'Success';
@@ -29,6 +31,8 @@ exports.latestBlock = (0, catchErrorAsync_1.default)((req, res) => __awaiter(voi
     config_1.response.data = data;
     res.status(config_1.response.statusCode).json(config_1.response);
 }));
+// Returns entire blockchain object. (Unreliable method for longer chains) Will need to be paid service or
+// limited to a slice of the blockchain due to bandwidth/processing demands. 
 exports.getBlockchain = (0, catchErrorAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const data = config_1.kekChain;
     config_1.response.status = 'Success';
