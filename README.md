@@ -8,51 +8,58 @@ The chain is currently decentralized, permissionless, unsigned and local only, i
 The chain uses transaction and chain validation to maintain accuracy of information. 
 
 To use the blockchain open 2-4 nodes using the commands:
-
  - npm run start0 //Uses port 8080
  - npm run start2 //Uses port 8082
  - npm run start3 //Uses port 8083
  - npm run start4 //Uses port 8084
 
 NOTE: Skipped 8081 as it interfered with another REST api I have running
-
+_____________________________________________________________________________________________________
+_____________________________________________________________________________________________________
+_____________________________________________________________________________________________________
 USAGE: 
 Before sending transactions, ensure nodes are connected by calling a known node with a POST request to:
 
  - {NODEURL}/nodes/register-broadcast-node
-
  containing a body with this information:
  {
-  "nodeUrl":'http://YOURURL'
+  "nodeUrl":'http://localhost:YOURPORT'
  }
 
 This will register the node at the target RPC which will broadcast it to other nodes in the network and return all network URL to the node that sent the request.
-
 !!!!  Do this as many times as necessary to connect all nodes !!!!!
+_____________________________________________________________________________________________________
+_____________________________________________________________________________________________________
+_____________________________________________________________________________________________________
 
 If a node has fallen behind or is started later, please use the above command followed by a GET request to
  - {NODEURL}/nodes/consensus
 
 This will fetch all chains update the local one to the longest VALID chain. If the longest one is INVALID this will break. // NOTE TO SELF ::: ADD TODO
 
-After this your node will be part of the network.
+After this your node will be part of the network and ready to submit transactions and mine blocks.
 
+_____________________________________________________________________________________________________
+_____________________________________________________________________________________________________
+_____________________________________________________________________________________________________
 
 Routes:  + Example JSON bodies
+_____________________________________________________________________________________________________
 
 rpc/
   ping (GET) 
-  // returns PONG if rpc is active
+  // returns "pong" if the target node is active
 
   latest-block (GET)
   // returns latest block
 
   get-blockchain (GET)
   // returns entire blockchain object
+_____________________________________________________________________________________________________
 
 node/
   add-transaction (POST)
-  // 
+  // Unused
 
   mine-block (GET)
   // Mines the next block with current pending transactions
@@ -87,6 +94,9 @@ node/
     "recipient":"Gucci Mayne"
   }
 
+  Vehicle Search??? 
+_____________________________________________________________________________________________________
+
 nodes/ 
   register-broadcast-node (POST)
   // registers node with the network
@@ -105,8 +115,8 @@ nodes/
   }
 
   register-nodes (POST)
-  // Registers an array of nodes, called automatically to registree by registering node during
-  // register-broadcast-node to update the node with the entire network
+  // Registers an array of nodes, called automatically by registrar to registree during
+  // register-broadcast-node to update the node with all URLS connected to the network
   Example JSON
   {
     "nodes": [
@@ -117,10 +127,11 @@ nodes/
   }
   consensus (GET)
   // The node will fetch all chains from registered nodes and compare with the local chain to
-     find the longest valid chain and if-needed replace its own chain
+     find the longest valid chain and if a longer VALID chain is found, replace its own chain
 
   list-nodes (GET)
   // Returns all registered nodes as JSON
+_____________________________________________________________________________________________________
 
 receive/
   block (POST)
