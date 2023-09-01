@@ -2,8 +2,6 @@ import { Request, Response} from "express";
 import catchErrorAsync from "../utils/catchErrorAsync";
 import { kekChain, response } from "../../utils/config";
 
-
-
 // Receive, validate and accept block if it is valid
 exports.receiveBlock = catchErrorAsync(async (req:Request, res:Response) => {
   console.clear()
@@ -16,11 +14,6 @@ exports.receiveBlock = catchErrorAsync(async (req:Request, res:Response) => {
   if (blockIsValid) {
     kekChain.chain.push(block as Block)
     kekChain.pendingList = [];
-
-    // clear only txs in block
-    // for (let tx in block.data) {
-
-    // }
 
     response.statusCode = 202;
     response.status = "Success";

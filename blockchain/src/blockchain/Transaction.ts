@@ -1,4 +1,3 @@
-import { randomUUID } from "crypto";
 import { kekChain } from "../utils/config";
 
 export class VehicleTransaction implements Transaction {

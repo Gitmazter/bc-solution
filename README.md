@@ -1,4 +1,18 @@
 <h1>PLEASE READ IN TEXT EDITOR</h1>
+______________________________________________________________
+TESTING JSON for POSTMAN:::
+{
+    "nodeUrl":"http://localhost:8082",
+    "sender" : "alice",
+    "recipient" : "bob",
+    //"sender" : "bob",
+    //"recipient" : "alice",
+    "vehicle": "AGL-265", /* (REPLACE WHEN REGISTERING NEW VEHICLE) */
+    "year": 2003,
+    "make": "Fiat",
+    "model": "500"
+}
+___________________________________________________________
 
 This blockchain handles Vehicle Registrations though a Rest-API connected to a Proop Of Work Blockchain. 
 
@@ -16,6 +30,7 @@ NOTE: Skipped 8081 as it interfered with another REST api I have running
 _____________________________________________________________________________________________________
 _____________________________________________________________________________________________________
 _____________________________________________________________________________________________________
+
 USAGE: 
 Before sending transactions, ensure nodes are connected by calling a known node with a POST request to:
 
@@ -92,8 +107,6 @@ node/
   {
     "recipient":"Gucci Mayne"
   }
-
-  Vehicle Search??? 
 _____________________________________________________________________________________________________
 
 nodes/ 

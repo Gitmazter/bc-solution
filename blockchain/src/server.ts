@@ -3,13 +3,14 @@ import cors from 'cors'
 import errorHandler from './api/middleware/errorHandler'
 import { defaultPORT } from './utils/config';
 
+/* ROUTES */
 import nodeRouter from './api/routes/node-routes';
 import nodesRouter from './api/routes/nodes-routes';
 import rpcRouter from './api/routes/rpc-routes';
 import receivingRouter from './api/routes/receiving-routes';
 
-// app.use(bodyParser.json()) I listen :) 
 
+// app.use(bodyParser.json()) I listen :) 
 const app = express()
 app.use(cors({
   origin: '*',
