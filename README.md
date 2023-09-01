@@ -3,15 +3,15 @@
 
 TESTING JSON for POSTMAN:::<br>
 { <br>
-    "nodeUrl":"http://localhost:8082",<br>
-    "sender" : "alice",<br>
-    "recipient" : "bob",<br>
-    //"sender" : "bob",<br>
-    //"recipient" : "alice",<br>
-    "vehicle": "AGL-265", /* (REPLACE WHEN REGISTERING NEW VEHICLE) */<br>
-    "year": 2003,<br>
-    "make": "Fiat",<br>
-    "model": "500"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;    "nodeUrl":"http://localhost:8082",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;    "sender" : "alice",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;    "recipient" : "bob",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;    //"sender" : "bob",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;    //"recipient" : "alice",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;    "vehicle": "AGL-265", /* (REPLACE WHEN REGISTERING NEW VEHICLE) */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;    "year": 2003,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;    "make": "Fiat",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;    "model": "500"<br>
 }<br>
 _____________________________________________________________________________________________________
 _____________________________________________________________________________________________________
@@ -42,7 +42,7 @@ Before sending transactions, ensure nodes are connected by calling a known node 
  containing a body with this information:
 
  {
-  "nodeUrl":'http://localhost:YOURPORT'
+ &nbsp;&nbsp;&nbsp;&nbsp; "nodeUrl":'http://localhost:YOURPORT'
  }
 
 This will register the node at the target RPC which will broadcast it to other nodes in the network and return all network URL to the node that sent the request.
@@ -88,10 +88,10 @@ ________________________________________________________________________________
   // Adds a new vehicle to the pool from 00 sender, license plate # will be auto-generated
   example JSON:<br>
   {<br>
-    "recipient" : "Gucci Mayne",<br>
-    "year": 2003,<br>
-    "make": "Fiat",<br>
-    "model": "500"<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;  "recipient" : "Gucci Mayne",<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;  "year": 2003,<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;  "make": "Fiat",<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;  "model": "500"<br>
   }<br>
 
   ### transfer-vehicle (POST)
@@ -99,12 +99,12 @@ ________________________________________________________________________________
   // note: license plate can be found with owner search
   example JSON:<br>
   {<br>
-    "sender" : "Gucci Mayne",<br>
-    "recipient" : "John Wick",<br>
-    "vehicle": "EJZ-215" <br>
-    "year": 2003,<br>
-    "make": "Fiat",<br>
-    "model": "500"<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;  "sender" : "Gucci Mayne",<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;  "recipient" : "John Wick",<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;  "vehicle": "EJZ-215" <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;  "year": 2003,<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;  "make": "Fiat",<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;  "model": "500"<br>
   }<br>
 
   ### owner-search (POST)
@@ -121,7 +121,7 @@ ________________________________________________________________________________
   example JSON call to known node:<br>
   POST TO: http://localhost:8080/register-broadcast-node FROM: http://localhost:8082<br>
   {<br>
-    "nodeUrl":"http://localhost:8082"<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;  "nodeUrl":"http://localhost:8082"<br>
   }<br>
   
   ### register-node (POST)
@@ -129,7 +129,7 @@ ________________________________________________________________________________
   // with rest of network.<br>
   example JSON: <br>
   {<br>
-    "nodeUrl": "http://localhost:8082"<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;  "nodeUrl": "http://localhost:8082"<br>
   }<br>
 
   ### register-nodes (POST)
