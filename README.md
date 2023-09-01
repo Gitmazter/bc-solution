@@ -1,5 +1,5 @@
 <h1>PLEASE READ IN TEXT EDITOR</h1>
-______________________________________________________________
+_____________________________________________________________________________________________________
 TESTING JSON for POSTMAN:::
 {
     "nodeUrl":"http://localhost:8082",
@@ -12,7 +12,7 @@ TESTING JSON for POSTMAN:::
     "make": "Fiat",
     "model": "500"
 }
-___________________________________________________________
+_____________________________________________________________________________________________________
 
 This blockchain handles Vehicle Registrations though a Rest-API connected to a Proop Of Work Blockchain. 
 
