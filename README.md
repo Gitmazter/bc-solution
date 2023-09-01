@@ -64,25 +64,25 @@ ________________________________________________________________________________
 <h2>Routes:  + Example JSON bodies</h2>
 _____________________________________________________________________________________________________
 
-#rpc/ <br><br>
-  ping (GET) 
-  // returns "pong" if the target node is active
-
-  latest-block (GET)
-  // returns latest block
-
-  get-blockchain (GET)
-  // returns entire blockchain object
+# rpc/ <br><br>
+  # ping (GET)  <br>
+  // returns "pong" if the target node is active <br>
+  <br>
+  # latest-block (GET) <br>
+  // returns latest block <br>
+  <br>
+  # get-blockchain (GET) <br>
+  // returns entire blockchain object <br><br>
 _____________________________________________________________________________________________________
 
-#node/ <br><br>
-  add-transaction (POST)
+# node/ <br><br>
+  # add-transaction (POST)
   // Unused
 
-  mine-block (GET)
+  # mine-block (GET)
   // Mines the next block with current pending transactions
 
-  new-vehicle (POST)
+  # new-vehicle (POST)
   // Adds a new vehicle to the pool from 00 sender, license plate # will be auto-generated
   example JSON:
   {
@@ -92,7 +92,7 @@ ________________________________________________________________________________
     "model": "500"
   }
 
-  transfer-vehicle (POST)
+  # transfer-vehicle (POST)
   // Transfers Vehicles Between Owners, sender has to be latest recipient.
   // note: license plate can be found with owner search
   example JSON:
@@ -105,7 +105,7 @@ ________________________________________________________________________________
     "model": "500"
   }
 
-  owner-search (POST)
+  # owner-search (POST)
   // Returns all vehicles held by owner
   example JSON:
   {
@@ -113,7 +113,7 @@ ________________________________________________________________________________
   }
 _____________________________________________________________________________________________________
 
-#nodes/ <br><br>
+# nodes/ <br><br>
   register-broadcast-node (POST)
   // registers node with the network
   example JSON call to known node:
@@ -149,7 +149,7 @@ ________________________________________________________________________________
   // Returns all registered nodes as JSON
 _____________________________________________________________________________________________________
 
-#receive/ <br><br>
+# receive/ <br><br>
   block (POST)
   // Node expects a block type object to arrive and will validate it, if valid with local chain,
      the node will push it to the end of the chain
