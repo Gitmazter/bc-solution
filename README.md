@@ -1,18 +1,18 @@
 <h1>PLEASE READ IN TEXT EDITOR</h1>
 
 
-TESTING JSON for POSTMAN:::
-`{ 
-    "nodeUrl":"http://localhost:8082",
-    "sender" : "alice",
-    "recipient" : "bob",
-    //"sender" : "bob",
-    //"recipient" : "alice",
-    "vehicle": "AGL-265", /* (REPLACE WHEN REGISTERING NEW VEHICLE) */
-    "year": 2003,
-    "make": "Fiat",
-    "model": "500"
-}`
+TESTING JSON for POSTMAN:::<br>
+{ <br>
+    "nodeUrl":"http://localhost:8082",<br>
+    "sender" : "alice",<br>
+    "recipient" : "bob",<br>
+    //"sender" : "bob",<br>
+    //"recipient" : "alice",<br>
+    "vehicle": "AGL-265", /* (REPLACE WHEN REGISTERING NEW VEHICLE) */<br>
+    "year": 2003,<br>
+    "make": "Fiat",<br>
+    "model": "500"<br>
+}<br>
 _____________________________________________________________________________________________________
 _____________________________________________________________________________________________________
 _____________________________________________________________________________________________________
@@ -86,13 +86,13 @@ ________________________________________________________________________________
 
   ### new-vehicle (POST)
   // Adds a new vehicle to the pool from 00 sender, license plate # will be auto-generated
-  example JSON:
-  {
-    "recipient" : "Gucci Mayne",
-    "year": 2003,
-    "make": "Fiat",
-    "model": "500"
-  }
+  example JSON:<br>
+  {<br>
+    "recipient" : "Gucci Mayne",<br>
+    "year": 2003,<br>
+    "make": "Fiat",<br>
+    "model": "500"<br>
+  }<br>
 
   ### transfer-vehicle (POST)
   // Transfers Vehicles Between Owners, sender has to be latest recipient.
@@ -117,44 +117,44 @@ ________________________________________________________________________________
 
 ## nodes/ <br><br>
   ### register-broadcast-node (POST)
-  // registers node with the network
-  example JSON call to known node:
-  POST TO: http://localhost:8080/register-broadcast-node FROM: http://localhost:8082
-  {
-    "nodeUrl":"http://localhost:8082"
-  }
+  // registers node with the network<br>
+  example JSON call to known node:<br>
+  POST TO: http://localhost:8080/register-broadcast-node FROM: http://localhost:8082<br>
+  {<br>
+    "nodeUrl":"http://localhost:8082"<br>
+  }<br>
   
   ### register-node (POST)
-  // Called automatically during register-broadcast-node to register single node 
-  // with rest of network.
-  example JSON: 
-  {
-    "nodeUrl": "http://localhost:8082"
-  }
+  // Called automatically during register-broadcast-node to register single node <br>
+  // with rest of network.<br>
+  example JSON: <br>
+  {<br>
+    "nodeUrl": "http://localhost:8082"<br>
+  }<br>
 
   ### register-nodes (POST)
-  // Registers an array of nodes, called automatically by registrar to registree during
-  // register-broadcast-node to update the node with all URLS connected to the network
-  Example JSON
-  {
-    "nodes": [
-      "http://localhost:8080",
-      "http://localhost:8082",
-      "http://localhost:8083"
-    ]
-  }
+  // Registers an array of nodes, called automatically by registrar to registree during<br>
+  // register-broadcast-node to update the node with all URLS connected to the network<br>
+  Example JSON<br>
+  {<br>
+    "nodes": [<br>
+      "http://localhost:8080",<br>
+      "http://localhost:8082",<br>
+      "http://localhost:8083"<br>
+    ]<br>
+  }<br>
   ### consensus (GET)
-  // The node will fetch all chains from registered nodes and compare with the local chain to
-     find the longest valid chain and if a longer VALID chain is found, replace its own chain
+  // The node will fetch all chains from registered nodes and compare with the local chain to<br>
+     find the longest valid chain and if a longer VALID chain is found, replace its own chain<br>
 
-  list-nodes (GET)
-  // Returns all registered nodes as JSON
+  list-nodes (GET)<br>
+  // Returns all registered nodes as JSON<br>
 _____________________________________________________________________________________________________
 
 ## receive/ <br><br>
   ### block (POST)
-  // Node expects a block type object to arrive and will validate it, if valid with local chain,
-     the node will push it to the end of the chain
+  // Node expects a block type object to arrive and will validate it, if valid with local chain,<br>
+     the node will push it to the end of the chain<br>
 
   ### transaction (POST)
-  // The block will expect a VehicleTransaction object and validate it, if valid the object will be pushed to pendingList
+  // The block will expect a VehicleTransaction object and validate it, if valid the object will be pushed to pendingList<br>
