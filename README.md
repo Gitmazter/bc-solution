@@ -64,25 +64,27 @@ ________________________________________________________________________________
 <h2>Routes:  + Example JSON bodies</h2>
 _____________________________________________________________________________________________________
 
-# rpc/ <br><br>
-  # ping (GET)  <br>
+## rpc/ <br><br>
+  ### ping (GET)  <br>
   // returns "pong" if the target node is active <br>
   <br>
-  # latest-block (GET) <br>
+
+  ### latest-block (GET) <br>
   // returns latest block <br>
   <br>
-  # get-blockchain (GET) <br>
+
+  ### get-blockchain (GET) <br>
   // returns entire blockchain object <br><br>
 _____________________________________________________________________________________________________
 
-# node/ <br><br>
-  # add-transaction (POST)
+## node/ <br><br>
+  ### add-transaction (POST)
   // Unused
 
-  # mine-block (GET)
+  ### mine-block (GET)
   // Mines the next block with current pending transactions
 
-  # new-vehicle (POST)
+  ### new-vehicle (POST)
   // Adds a new vehicle to the pool from 00 sender, license plate # will be auto-generated
   example JSON:
   {
@@ -92,7 +94,7 @@ ________________________________________________________________________________
     "model": "500"
   }
 
-  # transfer-vehicle (POST)
+  ### transfer-vehicle (POST)
   // Transfers Vehicles Between Owners, sender has to be latest recipient.
   // note: license plate can be found with owner search
   example JSON:
@@ -105,7 +107,7 @@ ________________________________________________________________________________
     "model": "500"
   }
 
-  # owner-search (POST)
+  ### owner-search (POST)
   // Returns all vehicles held by owner
   example JSON:
   {
@@ -113,8 +115,8 @@ ________________________________________________________________________________
   }
 _____________________________________________________________________________________________________
 
-# nodes/ <br><br>
-  register-broadcast-node (POST)
+## nodes/ <br><br>
+  ### register-broadcast-node (POST)
   // registers node with the network
   example JSON call to known node:
   POST TO: http://localhost:8080/register-broadcast-node FROM: http://localhost:8082
@@ -122,7 +124,7 @@ ________________________________________________________________________________
     "nodeUrl":"http://localhost:8082"
   }
   
-  register-node (POST)
+  ### register-node (POST)
   // Called automatically during register-broadcast-node to register single node 
   // with rest of network.
   example JSON: 
@@ -130,7 +132,7 @@ ________________________________________________________________________________
     "nodeUrl": "http://localhost:8082"
   }
 
-  register-nodes (POST)
+  ### register-nodes (POST)
   // Registers an array of nodes, called automatically by registrar to registree during
   // register-broadcast-node to update the node with all URLS connected to the network
   Example JSON
@@ -141,7 +143,7 @@ ________________________________________________________________________________
       "http://localhost:8083"
     ]
   }
-  consensus (GET)
+  ### consensus (GET)
   // The node will fetch all chains from registered nodes and compare with the local chain to
      find the longest valid chain and if a longer VALID chain is found, replace its own chain
 
@@ -149,10 +151,10 @@ ________________________________________________________________________________
   // Returns all registered nodes as JSON
 _____________________________________________________________________________________________________
 
-# receive/ <br><br>
-  block (POST)
+## receive/ <br><br>
+  ### block (POST)
   // Node expects a block type object to arrive and will validate it, if valid with local chain,
      the node will push it to the end of the chain
 
-  transaction (POST)
+  ### transaction (POST)
   // The block will expect a VehicleTransaction object and validate it, if valid the object will be pushed to pendingList
