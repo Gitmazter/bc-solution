@@ -97,22 +97,22 @@ ________________________________________________________________________________
   ### transfer-vehicle (POST)
   // Transfers Vehicles Between Owners, sender has to be latest recipient.
   // note: license plate can be found with owner search
-  example JSON:
-  {
-    "sender" : "Gucci Mayne",
-    "recipient" : "John Wick",
-    "vehicle": "EJZ-215" 
-    "year": 2003,
-    "make": "Fiat",
-    "model": "500"
-  }
+  example JSON:<br>
+  `{<br>
+    "sender" : "Gucci Mayne",<br>
+    "recipient" : "John Wick",<br>
+    "vehicle": "EJZ-215" <br>
+    "year": 2003,<br>
+    "make": "Fiat",<br>
+    "model": "500"<br>
+  }<br>`
 
   ### owner-search (POST)
   // Returns all vehicles held by owner
-  example JSON:
-  {
-    "recipient":"Gucci Mayne"
-  }
+  example JSON: <br>
+  {<br>
+    "recipient":"Gucci Mayne"<br>
+  }<br>
 _____________________________________________________________________________________________________
 
 ## nodes/ <br><br>
