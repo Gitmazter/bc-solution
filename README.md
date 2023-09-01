@@ -40,6 +40,7 @@ Before sending transactions, ensure nodes are connected by calling a known node 
 
  - {NODEURL}/nodes/register-broadcast-node
  containing a body with this information:
+
  {
   "nodeUrl":'http://localhost:YOURPORT'
  }
@@ -53,7 +54,7 @@ ________________________________________________________________________________
 If a node has fallen behind or is started later, please use the above command followed by a GET request to
  - {NODEURL}/nodes/consensus
 
-This will fetch all chains update the local one to the longest VALID chain. If the longest one is INVALID this will break. // NOTE TO SELF ::: ADD TODO
+This will fetch all chains update the local one to the longest VALID chain.
 
 After this your node will be part of the network and ready to submit transactions and mine blocks.
 
@@ -63,7 +64,7 @@ ________________________________________________________________________________
 <h2>Routes:  + Example JSON bodies</h2>
 _____________________________________________________________________________________________________
 
-rpc/
+#rpc/ <br><br>
   ping (GET) 
   // returns "pong" if the target node is active
 
@@ -74,7 +75,7 @@ rpc/
   // returns entire blockchain object
 _____________________________________________________________________________________________________
 
-node/
+#node/ <br><br>
   add-transaction (POST)
   // Unused
 
@@ -112,7 +113,7 @@ node/
   }
 _____________________________________________________________________________________________________
 
-nodes/ 
+#nodes/ <br><br>
   register-broadcast-node (POST)
   // registers node with the network
   example JSON call to known node:
@@ -148,7 +149,7 @@ nodes/
   // Returns all registered nodes as JSON
 _____________________________________________________________________________________________________
 
-receive/
+#receive/ <br><br>
   block (POST)
   // Node expects a block type object to arrive and will validate it, if valid with local chain,
      the node will push it to the end of the chain
