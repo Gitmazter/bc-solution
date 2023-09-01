@@ -2,17 +2,17 @@
 
 
 TESTING JSON for POSTMAN:::
-`{
-    "nodeUrl":"http://localhost:8082",
-    "sender" : "alice",
-    "recipient" : "bob",
-    //"sender" : "bob",
-    //"recipient" : "alice",
-    "vehicle": "AGL-265", /* (REPLACE WHEN REGISTERING NEW VEHICLE) */
-    "year": 2003,
-    "make": "Fiat",
-    "model": "500"
-}`
+`{ </br>
+    "nodeUrl":"http://localhost:8082",</br>
+    "sender" : "alice",</br>
+    "recipient" : "bob",</br>
+    //"sender" : "bob",</br>
+    //"recipient" : "alice",</br>
+    "vehicle": "AGL-265", /* (REPLACE WHEN REGISTERING NEW VEHICLE) */</br>
+    "year": 2003,</br>
+    "make": "Fiat",</br>
+    "model": "500"</br>
+}</br>`
 _____________________________________________________________________________________________________
 _____________________________________________________________________________________________________
 _____________________________________________________________________________________________________
