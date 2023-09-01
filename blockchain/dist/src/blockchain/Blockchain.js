@@ -51,18 +51,29 @@ class Blockchain {
     ;
     validateTransaction(transaction) {
         return __awaiter(this, void 0, void 0, function* () {
+            const origTx = transaction;
             let tempTx = transaction;
-            const tempHash = transaction.hash;
             tempTx.hash = '';
-            const hash2test = this.createHash(tempTx);
-            const senderVehicles = this.findOwnerVehicles(transaction.sender);
-            if (tempHash == hash2test && senderVehicles.indexOf(transaction.vehicle) > -1) {
+            tempTx.hash = yield this.createHash(JSON.stringify(tempTx));
+            console.log(origTx.sender);
+            const senderVehicles = this.findOwnerVehicles(origTx.sender);
+            console.log(senderVehicles);
+            if (tempTx.hash == origTx.hash && senderVehicles.map(e => e.vehicle).indexOf(origTx.vehicle)) {
+                console.log('Transaction Valid');
+                this.pendingList.push(origTx);
+                const nextBlock = this.latestBlock().index + 1;
+                console.log(nextBlock);
+                return nextBlock;
+            }
+            else if (tempTx.hash == origTx.hash && origTx.sender == '00') {
+                console.log('Transaction Valid');
                 this.pendingList.push(transaction);
                 const nextBlock = this.latestBlock().index + 1;
                 console.log(nextBlock);
                 return nextBlock;
             }
             else {
+                console.log('Transaction Invalid');
                 return null;
             }
         });

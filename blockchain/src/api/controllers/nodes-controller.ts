@@ -78,9 +78,12 @@ exports.consensus = catchErrorAsync(async (req:Request, res:Response) => {
   let longestChain = null;
   let pendingList = null;
   let chainUpdated = false;
+  const urls = kekChain.networkNodes
 
-  await kekChain.networkNodes.forEach(async (url) => {
-    await axios(`${url}/rpc/get-blockchain`)
+  for(let i in kekChain.networkNodes) {
+
+    
+    await axios(`${urls[i]}/rpc/get-blockchain`)
     .then(async (body) => {
 
       const remoteChain:BlockchainTypes = body.data.data;
@@ -89,7 +92,7 @@ exports.consensus = catchErrorAsync(async (req:Request, res:Response) => {
         longestChainLen = remoteChain.chain.length;
         longestChain = remoteChain.chain;
         pendingList = remoteChain.pendingList;
-        blockLeader = url;
+        blockLeader = urls[i];
       };
     })
     .then(() => {
@@ -99,7 +102,7 @@ exports.consensus = catchErrorAsync(async (req:Request, res:Response) => {
         kekChain.pendingList = pendingList;
       };
     }) 
-  })
+  }
 
   console.log('Chain synchronized');
   

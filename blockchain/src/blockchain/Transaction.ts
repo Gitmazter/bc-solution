@@ -1,4 +1,5 @@
 import { randomUUID } from "crypto";
+import { kekChain } from "../utils/config";
 
 export class VehicleTransaction implements Transaction {
   vehicle: string
@@ -27,21 +28,33 @@ export class VehicleTransaction implements Transaction {
     const numbers = '1234567890'
     const numbersLength = numbers.length
     let counter = 0;
+    let isOriginal = false
 
-    while (counter < length) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-      counter += 1;
+    while (!isOriginal) {
+      result = '';
+      counter = 0;
+
+      while (counter < length) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        counter += 1;
+      }
+
+      result += '-';
+      counter = 0;
+
+      while (counter < length) {
+        result += numbers.charAt(Math.floor(Math.random() * numbersLength));
+        counter += 1;
+      }
+      console.log("New Plate Number Generated: ",result);
+
+      if (kekChain.searchPlate(result) == null ) {
+        isOriginal = true;
+      }
     }
-
-    result += '-'
-    counter = 0
-
-    while (counter < length) {
-      result += numbers.charAt(Math.floor(Math.random() * numbersLength));
-      counter += 1;
-    }
-    console.log("New Plate Number Generated: ",result);
     
+
+
     return result;
   }
 

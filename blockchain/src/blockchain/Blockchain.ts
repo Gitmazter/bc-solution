@@ -2,8 +2,6 @@ import { Transaction } from 'mongodb';
 import Block from './Block'
 import { VehicleTransaction } from './Transaction';
 
-// TODO: Validate chain on startup if chain is !== []
-
 class Blockchain implements BlockchainTypes {
   chain: Block[];
   pendingList: VehicleTransaction[];
@@ -52,15 +50,32 @@ class Blockchain implements BlockchainTypes {
     return this.chain.at(-1)
   };
   
-  async validateTransaction(transaction:any) {
+  async validateTransaction(transaction:VehicleTransaction) {
+    const origTx = transaction;
     let tempTx = transaction;
-    const tempHash = transaction.hash;
-    tempTx.hash = '';
-    const hash2test = this.createHash(tempTx);
 
-    const senderVehicles = this.findOwnerVehicles(transaction.sender);
+    tempTx.hash = '';
+    tempTx.hash = await this.createHash(JSON.stringify(tempTx));
+
+    console.log(origTx.sender);
     
-    if (tempHash == hash2test && senderVehicles.indexOf(transaction.vehicle) > -1) {
+    const senderVehicles = this.findOwnerVehicles(origTx.sender);
+    console.log(senderVehicles);
+        
+    if (tempTx.hash == origTx.hash && senderVehicles.map(e => e.vehicle).indexOf(origTx.vehicle)) {
+      console.log('Transaction Valid');
+      
+      this.pendingList.push(origTx);
+
+      const nextBlock = this.latestBlock().index + 1
+      console.log(nextBlock);
+      
+      return nextBlock;
+    }
+    
+    else if (tempTx.hash == origTx.hash && origTx.sender == '00') {
+      console.log('Transaction Valid');
+      
       this.pendingList.push(transaction);
 
       const nextBlock = this.latestBlock().index + 1
@@ -69,6 +84,7 @@ class Blockchain implements BlockchainTypes {
       return nextBlock;
     }
     else {
+      console.log('Transaction Invalid');
       return null
     }
   };

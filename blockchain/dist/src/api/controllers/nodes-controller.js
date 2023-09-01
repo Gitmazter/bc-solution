@@ -75,15 +75,16 @@ exports.consensus = (0, catchErrorAsync_1.default)((req, res) => __awaiter(void 
     let longestChain = null;
     let pendingList = null;
     let chainUpdated = false;
-    yield config_1.kekChain.networkNodes.forEach((url) => __awaiter(void 0, void 0, void 0, function* () {
-        yield (0, axios_1.default)(`${url}/rpc/get-blockchain`)
+    const urls = config_1.kekChain.networkNodes;
+    for (let i in config_1.kekChain.networkNodes) {
+        yield (0, axios_1.default)(`${urls[i]}/rpc/get-blockchain`)
             .then((body) => __awaiter(void 0, void 0, void 0, function* () {
             const remoteChain = body.data.data;
             if (remoteChain.chain.length > longestChainLen) {
                 longestChainLen = remoteChain.chain.length;
                 longestChain = remoteChain.chain;
                 pendingList = remoteChain.pendingList;
-                blockLeader = url;
+                blockLeader = urls[i];
             }
             ;
         }))
@@ -95,7 +96,7 @@ exports.consensus = (0, catchErrorAsync_1.default)((req, res) => __awaiter(void 
             }
             ;
         });
-    }));
+    }
     console.log('Chain synchronized');
     config_1.response.status = "Success";
     config_1.response.statusCode = 200;

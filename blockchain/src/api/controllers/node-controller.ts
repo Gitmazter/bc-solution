@@ -102,9 +102,6 @@ exports.newVehicle = catchErrorAsync(async (req:Request, res:Response) => {
   res.status(response.statusCode).json(response);
 });
 
-
-
-
 exports.vehicleTransfer = catchErrorAsync(async (req:Request, res:Response) => {
   const vehicleData = req.body;
   

@@ -1,6 +1,5 @@
 <h1>PLEASE READ IN TEXT EDITOR</h1>
 
-
 This blockchain handles Vehicle Registrations though a Rest-API connected to a Proop Of Work Blockchain. 
 
 The chain is currently decentralized, permissionless, unsigned and local only, it also only checks whether a vehicle has already been registered and is non-persistent between restarts. 
