@@ -2,7 +2,7 @@
 
 
 TESTING JSON for POSTMAN:::
-`{ <br/>
+`{ 
     "nodeUrl":"http://localhost:8082",
     "sender" : "alice",
     "recipient" : "bob",
@@ -17,7 +17,7 @@ ________________________________________________________________________________
 _____________________________________________________________________________________________________
 _____________________________________________________________________________________________________
 
-
+<h2> Description </h2>
 This blockchain handles Vehicle Registrations though a Rest-API connected to a Proop Of Work Blockchain. 
 
 The chain is currently decentralized, permissionless, unsigned and local only, it also only checks whether a vehicle has already been registered and is non-persistent between restarts. 
@@ -30,12 +30,12 @@ To use the blockchain open 2-4 nodes using the commands:
  - npm run start3 //Uses port 8083
  - npm run start4 //Uses port 8084
 
-NOTE: Skipped 8081 as it interfered with another REST api I have running
+#NOTE: Skipped 8081 as it interfered with another REST api I have running
 _____________________________________________________________________________________________________
 _____________________________________________________________________________________________________
 _____________________________________________________________________________________________________
 
-USAGE: 
+<h2>Usage Notes</h2>
 Before sending transactions, ensure nodes are connected by calling a known node with a POST request to:
 
  - {NODEURL}/nodes/register-broadcast-node
@@ -60,8 +60,7 @@ After this your node will be part of the network and ready to submit transaction
 _____________________________________________________________________________________________________
 _____________________________________________________________________________________________________
 _____________________________________________________________________________________________________
-
-Routes:  + Example JSON bodies
+<h2>Routes:  + Example JSON bodies</h2>
 _____________________________________________________________________________________________________
 
 rpc/
