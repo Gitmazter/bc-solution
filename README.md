@@ -137,11 +137,11 @@ ________________________________________________________________________________
   // register-broadcast-node to update the node with all URLS connected to the network<br>
   Example JSON<br>
   {<br>
-    "nodes": [<br>
-      "http://localhost:8080",<br>
-      "http://localhost:8082",<br>
-      "http://localhost:8083"<br>
-    ]<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;  "nodes": [<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    "http://localhost:8080",<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    "http://localhost:8082",<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    "http://localhost:8083"<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; ]<br>
   }<br>
   ### consensus (GET)
   // The node will fetch all chains from registered nodes and compare with the local chain to<br>
